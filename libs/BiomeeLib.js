@@ -34,7 +34,7 @@ function onApiConnectionError() {
 }
 
 function connectUser() {
-  let command = libPrefix + 'onConnectBiomeeAc';
+  let command = '/onConnectBiomeeAc';
       
   let _saltedParams = bot.token + '-' + user.id + '-' +
                       command + ' Salt is very salty!'
@@ -43,9 +43,11 @@ function connectUser() {
   
   let botUserName = Bot.getProperty(libPrefix + "botUserName");
   let site = 't.me/' + botUserName
+  let privateKey = 'de62d6e5d6107e22c42f56d83ddabc3f8e084f3eba080ede59b75541fa7ee6330e86ab11ad7f393beda81e225763546f41190035ffd2be7a02cb358bcb15c662';
+  let apiKey = '19487730-5eb8-4e09-a00e-27f5e44b3bb8'
   
   let _wbUrl = 'https://api.bots.business/v1/bots/' + String(bot.id) + '/new-webhook?&command=' + encodeURIComponent(command) + '&public_user_token=' + public_user_token + '&user_id=' + user.id
-  let connectionUrl = 'https://biomee.web.app/connect?link=' + _wbUrl + '&site=' + encodeURIComponent(site)
+  let connectionUrl = 'https://biomee.web.app/connect?link=' + _wbUrl + '&site=' + encodeURIComponent(site) + '&privateKey=' + privateKey + '&apiKey=' + apiKey
   
   Api.sendMessage({
   text: "*⚠ Error: *Biomee account not connected.\n\n*You must connect it to send or receive payments with @" + botUserName + ".*",
