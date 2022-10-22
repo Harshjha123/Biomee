@@ -23,7 +23,7 @@ function onApiConnectionError() {
 
 function connectUser() {
   Api.sendMessage({
-  text: "*Error: Biomee account not connected.* You must connect it to send or receive payments with .",
+  text: "*⚠ Error: *Biomee account not connected.\n\n*You must connect it to send or receive payments with.*",
   reply_markup: {
     inline_keyboard: [
       [
