@@ -22,21 +22,16 @@ function onApiConnectionError() {
 }
 
 function connectUser() {
-  var webExample = 'https://biomee.web.app/connect';
-
-Api.sendMessage({
-  text: "It is example for BB Web App",
-
+  Api.sendMessage({
+  text: "*Error: Biomee account not connected.* You must connect it to send or receive payments with .",
   reply_markup: {
-    resize_keyboard: true,
-    keyboard: [
-      // line 1
+    inline_keyboard: [
       [
-        { text: "🤑 Open Web App" },
-        { text: "Open App", web_app: { url: webExample } }
+        { text: "Connect Account", web_app: { url: 'https://biomee.web.app/connect' } }
       ]
     ]
-  }
+  },
+    parse_mode: "Markdown"
 })
 }
 
