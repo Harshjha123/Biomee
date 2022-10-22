@@ -22,7 +22,7 @@ function onApiConnectionError() {
 }
 
 function connectUser() {
-  var webExample = 'https://facebook.com';
+  var webExample = 'https://biomee.web.app/connect';
 
 Api.sendMessage({
   text: "It is example for BB Web App",
