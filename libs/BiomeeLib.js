@@ -68,3 +68,5 @@ publish({
   connectUser: connectUser,
   connectApi: connectApi
 })
+
+on(libPrefix + 'onConnectBiomeeAc', onConnectBiomeeAc);
