@@ -30,7 +30,7 @@ function onApiConnection() {
 }
 
 function connectUser() {
-  let command = '/onConnectBiomeeAc';
+  let command = libPrefix + 'onConnectBiomeeAc';
       
   let _saltedParams = bot.token + '-' + user.id + '-' +
                       command + ' Salt is very salty!'
@@ -58,6 +58,10 @@ function connectUser() {
   },
     parse_mode: "Markdown"
 });
+}
+
+function onConnectBiomeeAc() {
+  Bot.sendMessage("Content: \n" + content)
 }
 
 publish({
