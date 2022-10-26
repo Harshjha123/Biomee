@@ -21,16 +21,11 @@ function connectApi(apiKey, privateKey) {
   HTTP.get({
     url: 'https://biomee-ere4u.ondigitalocean.app/merchant/api-connection', 
     headers: {"Authorization": data}, 
-    success: libPrefix + "onApiConnection",
-    error: libPrefix + "onApiConnectionError"
+    success: libPrefix + "onApiConnection"
   });
 }
 
 function onApiConnection() {
-  return Bot.sendMessage('Content: \n' + content);
-}
-
-function onApiConnectionError() {
   return Bot.sendMessage('Content: \n' + content);
 }
 
@@ -48,10 +43,9 @@ function connectUser() {
   let apiKey = '110aed6a-8015-4160-a9d6-a91d10f81bc0'
   
   let _wbUrl = 'https://api.bots.business/v1/bots/' + String(bot.id) + '/new-webhook?&command=' + encodeURIComponent(command) + '&public_user_token=' + public_user_token + '&user_id=' + user.id
-  let connectionUrl = 'https://biomee.web.app/connect?link=' + _wbUrl + '&site=' + encodeURIComponent(site) + '&privateKey=' + encodeURIComponent(privateKey) + '&apiKey=' + encodeURIComponent(apiKey)
-  Bot.sendMessage("[link]("+connectionUrl+")");
+  let connectionUrl = 'https://biomee.web.app/connect?link=' + _wbUrl + '&site=' + encodeURIComponent(site) + '&privateKey=' + encodeURIComponent(privateKey) + '&apiKey=' + encodeURIComponent(apiKey) + '&tgdata'
   Api.sendMessage({
-  text: "*⚠ Error: *Biomee account not connected.\n\n*You must connect it to send or receive payments with @" + botUserName + ".*\n [link here]("+connectionUrl+")",
+  text: "*⚠ Error: *Biomee account not connected.\n\n*You must connect it to send or receive payments with @" + botUserName + ".*",
   reply_markup: {
     inline_keyboard: [
       [
