@@ -58,8 +58,5 @@ function connectUser() {
 }
 
 publish({
-  connect: {
-    key: connectApi,
-    user: connectUser
-  }
+  connectUser: connectUser
 })
