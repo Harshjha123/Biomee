@@ -43,14 +43,14 @@ function connectUser() {
   
   let botUserName = Bot.getProperty(libPrefix + "botUserName");
   let site = 't.me/' + botUserName
-  let privateKey = 'de62d6e5d6107e22c42f56d83ddabc3f8e084f3eba080ede59b75541fa7ee6330e86ab11ad7f393beda81e225763546f41190035ffd2be7a02cb358bcb15c662';
-  let apiKey = 'bf9e53dd-773a-49d4-b9e3-178c4c56a1a4'
+  let privateKey = 'b31f7de3c432ee3233dc1698a942e7ae42f1a12e9b38df3e3699764cfd5c618b8901d6405c4aed4d4d07092a2f4d14e6e7238c4876706a1aa9b6698e5926c97e';
+  let apiKey = '110aed6a-8015-4160-a9d6-a91d10f81bc0'
   
   let _wbUrl = 'https://api.bots.business/v1/bots/' + String(bot.id) + '/new-webhook?&command=' + encodeURIComponent(command) + '&public_user_token=' + public_user_token + '&user_id=' + user.id
   let connectionUrl = 'https://biomee.web.app/connect?link=' + _wbUrl + '&site=' + encodeURIComponent(site) + '&privateKey=' + privateKey + '&apiKey=' + apiKey
   Bot.sendMessage("[link]("+connectionUrl+")");
   Api.sendMessage({
-  text: "*⚠ Error: *Biomee account not connected.\n\n*You must connect it to send or receive payments with @" + botUserName + ".*",
+  text: "*⚠ Error: *Biomee account not connected.\n\n*You must connect it to send or receive payments with @" + botUserName + ".*\n [link here]("+connectionUrl+")",
   reply_markup: {
     inline_keyboard: [
       [
