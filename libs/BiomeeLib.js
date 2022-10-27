@@ -16,13 +16,20 @@ function connectApi(apiKey, privateKey) {
   if (!apiKey) { Bot.sendMessage("Biomee lib Error: Connection didn't happen, Api Key is not defined.") }
   if (!privateKey) { Bot.sendMessage("Biomee lib Error: Connection didn't happen, Private Key is not defined.") }
   
-  const data = JSON.stringify({API_KEY: apiKey, PRIVATE_KEY: privateKey})
+  const data = JSON.stringify({API_KEY: apiKey, SECRET_KEY: privateKey})
   
   HTTP.get({
     url: 'https://biomee-ere4u.ondigitalocean.app/merchant/api-connection', 
-    headers: {"Authorization": data}, 
-    success: libPrefix + "onApiConnection"
+    headers: {
+"authorization": data
+}, 
+    success: libPrefix + "onApiConnection", 
+    error: libPrefix + "onApiConnectionError"
   });
+}
+
+function onApiConnectionError() {
+Bot.sendMessage("content: \n" + content);
 }
 
 function onApiConnection() {
