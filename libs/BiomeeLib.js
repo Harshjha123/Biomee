@@ -29,11 +29,12 @@ function connectApi(apiKey, privateKey) {
 }
 
 function onApiConnectionError() {
-Bot.sendMessage("*Biomee Lib Error:* Failed to connect your keys.");
+   Bot.sendMessage("*Biomee Lib Error:* Failed to connect your keys.");
 }
 
 function onApiConnection() {
-  Bot.sendMessage("content: \n" + JSON.parse(content));
+  const data = JSON.parse(content)
+  Bot.sendMessage("success: " + data.success + "\nuser: " + data.user)
 }
 
 function connectUser() {
@@ -51,8 +52,6 @@ function connectUser() {
   
   let _wbUrl = 'https://api.bots.business/v1/bots/' + String(bot.id) + '/new-webhook?&command=' + encodeURIComponent(command) + '&public_user_token=' + public_user_token + '&user_id=' + user.id
   let connectionUrl = 'https://biomee.web.app/connect?link=' + encodeURIComponent(_wbUrl) + '&site=' + encodeURIComponent(site) + '&privateKey=' + encodeURIComponent(privateKey) + '&apiKey=' + encodeURIComponent(apiKey) + '&tgdata'
- 
-  Bot.sendMessage("Link: [clicl here](" + connectionUrl + ")");
   
   Api.sendMessage({
   text: "*⚠ Error: *Biomee account not connected.\n\n*You must connect it to send or receive payments with @" + botUserName + ".*",
