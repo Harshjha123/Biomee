@@ -34,12 +34,11 @@ function onApiConnectionError() {
 }
 
 function onApiConnection() {
-  Bot.sendMessage("" + content + "")
   const data = JSON.parse(content)
   
   if(data.success) {
-       Bot.sendMessage("Keys Connected Successfully!");
        Bot.setProperty(libPrefix + "ID" + data.user + "string");
+       Bot.sendMessage("Keys Connected Successfully!");
   } else {
     Bot.sendMessage("*Biomee Lib Error:* Failed to connect your keys.");
   }
@@ -48,7 +47,7 @@ function onApiConnection() {
 function connectUser() {
   let merchant = Bot.getProperty(libPrefix + "ID");
 
-  if(!merchant) {
+  if(merchant) {
     let command = libPrefix + 'onConnectBiomeeAc';
       
   let _saltedParams = bot.token + '-' + user.id + '-' +
@@ -59,7 +58,6 @@ function connectUser() {
   let botUserName = Bot.getProperty(libPrefix + "botUserName");
   let site = 't.me/' + botUserName
   let keyData = Bot.getProperty(libPrefix + "Keys");
-  let key = JSON.parse(keyData)
   let privateKey = key.SECRET_KEY;
   let apiKey = key.API_KEY
   
