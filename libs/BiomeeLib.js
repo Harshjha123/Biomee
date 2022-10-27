@@ -13,7 +13,7 @@ function MD5(d){
 
 
 function connectApi(apiKey, privateKey) {
-  if (!apiKey) { Bot.sendMessage("Biomee lib Error: Connection didn't happen, Api Key is not defined.") }
+  if (!apiKey) { Bot.sendMessage("*Biomee lib Error:* Connection didn't happen, Api Key is not defined.") }
   if (!privateKey) { Bot.sendMessage("Biomee lib Error: Connection didn't happen, Private Key is not defined.") }
   
   const data = JSON.stringify({API_KEY: apiKey, SECRET_KEY: privateKey})
@@ -29,12 +29,11 @@ function connectApi(apiKey, privateKey) {
 }
 
 function onApiConnectionError() {
-  let data = JSON.parse(content)
-Bot.sendMessage("content: \n" + data);
+Bot.sendMessage("*Biomee Lib Error:* Failed to connect your keys.");
 }
 
 function onApiConnection() {
-  Bot.sendMessage("content: \n" + content);
+  Bot.sendMessage("content: \n" + JSON.parse(content));
 }
 
 function connectUser() {
