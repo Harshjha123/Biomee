@@ -29,7 +29,8 @@ function connectApi(apiKey, privateKey) {
 }
 
 function onApiConnectionError() {
-Bot.sendMessage("content: \n" + content);
+  let data = JSON.parse(content)
+Bot.sendMessage("content: \n" + data);
 }
 
 function onApiConnection() {
