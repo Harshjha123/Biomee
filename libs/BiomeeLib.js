@@ -77,3 +77,4 @@ publish({
 })
 
 on(libPrefix + 'onConnectBiomeeAc', onConnectBiomeeAc);
+on(libPrefix + 'onApiConnection', onApiConnection);
