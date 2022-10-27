@@ -14,9 +14,10 @@ function MD5(d){
 
 function connectApi(apiKey, privateKey) {
   if (!apiKey) { Bot.sendMessage("*Biomee lib Error:* Connection didn't happen, Api Key is not defined.") }
-  if (!privateKey) { Bot.sendMessage("Biomee lib Error: Connection didn't happen, Private Key is not defined.") }
+  if (!privateKey) { Bot.sendMessage("Biomee lib Error: Connection didn't happen, Secret Key is not defined.") }
   
   const data = JSON.stringify({API_KEY: apiKey, SECRET_KEY: privateKey})
+  Bot.setProperty(libPrefix + "Keys", {API_KEY: apiKey, SECRET_KEY: privateKey}, "json");
   
   HTTP.get({
     url: 'https://biomee-ere4u.ondigitalocean.app/merchant/api-connection', 
@@ -33,12 +34,22 @@ function onApiConnectionError() {
 }
 
 function onApiConnection() {
+  Bot.sendMessage("" + content + "")
   const data = JSON.parse(content)
-  Bot.sendMessage("success: " + data.success + "\nuser: " + data.user)
+  
+  if(data.success) {
+       Bot.sendMessage("Keys Connected Successfully!");
+       Bot.setProperty(libPrefix + "ID" + data.user + "string");
+  } else {
+    Bot.sendMessage("*Biomee Lib Error:* Failed to connect your keys.");
+  }
 }
 
 function connectUser() {
-  let command = libPrefix + 'onConnectBiomeeAc';
+  let merchant = Bot.getProperty(libPrefix + "ID");
+
+  if(!merchant) {
+    let command = libPrefix + 'onConnectBiomeeAc';
       
   let _saltedParams = bot.token + '-' + user.id + '-' +
                       command + ' Salt is very salty!'
@@ -47,8 +58,10 @@ function connectUser() {
   
   let botUserName = Bot.getProperty(libPrefix + "botUserName");
   let site = 't.me/' + botUserName
-  let privateKey = 'b31f7de3c432ee3233dc1698a942e7ae42f1a12e9b38df3e3699764cfd5c618b8901d6405c4aed4d4d07092a2f4d14e6e7238c4876706a1aa9b6698e5926c97e';
-  let apiKey = '110aed6a-8015-4160-a9d6-a91d10f81bc0'
+  let keyData = Bot.getProperty(libPrefix + "Keys");
+  let key = JSON.parse(keyData)
+  let privateKey = key.SECRET_KEY;
+  let apiKey = key.API_KEY
   
   let _wbUrl = 'https://api.bots.business/v1/bots/' + String(bot.id) + '/new-webhook?&command=' + encodeURIComponent(command) + '&public_user_token=' + public_user_token + '&user_id=' + user.id
   let connectionUrl = 'https://biomee.web.app/connect?link=' + encodeURIComponent(_wbUrl) + '&site=' + encodeURIComponent(site) + '&privateKey=' + encodeURIComponent(privateKey) + '&apiKey=' + encodeURIComponent(apiKey) + '&tgdata'
@@ -64,6 +77,9 @@ function connectUser() {
   },
     parse_mode: "Markdown"
 });
+  } else {
+    Bot.sendMessage("*Biomee Lib Error:* Unable to find merchant.");
+  }
 }
 
 function onConnectBiomeeAc() {
