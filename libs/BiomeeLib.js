@@ -57,7 +57,7 @@ function connectUser() {
   
   let botUserName = Bot.getProperty(libPrefix + "botUserName");
   let site = 't.me/' + botUserName
-  let keyData = Bot.getProperty(libPrefix + "Keys");
+  let key = Bot.getProperty(libPrefix + "Keys");
   let privateKey = key.SECRET_KEY;
   let apiKey = key.API_KEY
   
