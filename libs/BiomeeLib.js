@@ -37,7 +37,7 @@ function onApiConnection() {
   const data = JSON.parse(content)
   
   if(data.success) {
-       Bot.setProperty(libPrefix + "ID" + data.user + "string");
+       Bot.setProperty(libPrefix + "ID", data.user, "string");
        Bot.sendMessage("Keys Connected Successfully!");
   } else {
     Bot.sendMessage("*Biomee Lib Error:* Failed to connect your keys.");
