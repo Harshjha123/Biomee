@@ -84,10 +84,100 @@ function onConnectBiomeeAc() {
   Bot.sendMessage("Content: \n" + content)
 }
 
+function onDepositRequest(options) {
+  let conn = User.getProperty(libPrefix + "connection");
+  let merchant = Bot.getProperty(libPrefix + "ID");
+  
+  if(!merchant) {return Bot.sendMessage("*Biomee Lib Error:* Unable to find merchant.");}
+  
+  if(!conn.username || !conn.merchant_id || conn.merchant_id !== merchant) {
+    return connectUser()
+  }
+  
+  let keys = Bot.getProperty(libPrefix + "Keys");
+  const data = JSON.stringify({API_KEY: keys.API_KEY, SECRET_KEY: keys.SECRET_KEY})
+    
+  HTTP.post({
+    url: 'https://biomee-ere4u.ondigitalocean.app/merchant/deposit-request', 
+    headers: {
+      "authorization": data
+    }, 
+    data: {
+      amount: options.amount,
+      coin: options.coin,
+      network: options.network,
+      user: conn.username,
+      app: 't.me/' + bot.name,
+      success: options.success
+    },
+    success: libPrefix + "onMakePayment", 
+    error: libPrefix + "onApiConnectionError"
+  });
+}
+
+function onMakePayment() {
+  const data = content
+  
+  if(data.continue) {
+    let conn = User.getProperty(libPrefix + "connection");
+    
+    let _saltedParams = bot.token + '-' + user.id + '-' +
+                      data.command + ' Salt is very salty!'
+    
+    let public_user_token = MD5(_saltedParams);
+    
+    let _wbUrl = 'https://api.bots.business/v1/bots/' + String(bot.id) + '/new-webhook?&command=' + encodeURIComponent(data.success) + '&public_user_token=' + public_user_token + '&user_id=' + user.id
+    let paymentUrl = 'https://biomee.web.app/connect?link=' + encodeURIComponent(_wbUrl) + '&hash=' + encodeURIComponent(data.hash) + '&tgdata';
+    
+    Api.sendMessage({
+      text: "Payment Url",
+      reply_markup: {
+        inline_keyboard: [[{ text: "Make Payment", web_app: { url: paymentUrl } }]]
+      },
+      parse_mode: "Markdown"
+    })
+  } else {
+    return Bot.sendMessage("*Biomee Lib Error:* " + data.message);
+  }
+}
+
+function onWithdraw(options) {
+  let conn = User.getProperty(libPrefix + "connection");
+  let merchant = Bot.getProperty(libPrefix + "ID");
+  
+  if(!merchant) {return Bot.sendMessage("*Biomee Lib Error:* Unable to find merchant.");}
+  
+  if(!conn.username || !conn.merchant_id || conn.merchant !== merchant) {
+    return connectUser()
+  }
+  
+  let keys = Bot.getProperty(libPrefix + "Keys");
+  const data = JSON.stringify({API_KEY: keys.API_KEY, SECRET_KEY: keys.SECRET_KEY})
+  
+  HTTP.post({
+    url: 'https://biomee-ere4u.ondigitalocean.app/merchant/withdraw', 
+    headers: {
+      "authorization": data
+    }, 
+    data: {
+      amount: options.amount,
+      coin: options.coin,
+      network: options.network,
+      user: conn.username,
+      merchant: merchant,
+    },
+    success: options.success
+  });
+}
+
 publish({
-  connectUser: connectUser,
-  connectApi: connectApi
+  connect: {
+    user: connectUser,
+    api: connectApi
+  },
+  deposit: onDepositRequest
 })
 
 on(libPrefix + 'onConnectBiomeeAc', onConnectBiomeeAc);
 on(libPrefix + 'onApiConnection', onApiConnection);
+on(libPrefix + 'onMakePayment', onMakePayment);
