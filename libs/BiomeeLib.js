@@ -90,7 +90,7 @@ function onDepositRequest(options) {
   
   if(!merchant) {return Bot.sendMessage("*Biomee Lib Error:* Unable to find merchant.");}
   
-  if(!conn.username || !conn.merchant_id || conn.merchant_id !== merchant) {
+  if(!conn) {
     return connectUser()
   }
   
