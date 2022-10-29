@@ -123,7 +123,7 @@ function onDepositRequest(options) {
 }
 
 function onMakePayment() {
-  const data = content
+  const data = JSON.parse(`${content}`)
   
   if(data.continue) {
     let conn = User.getProperty(libPrefix + "connection");
