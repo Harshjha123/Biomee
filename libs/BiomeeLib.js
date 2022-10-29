@@ -81,7 +81,16 @@ function connectUser() {
 }
 
 function onConnectBiomeeAc() {
-  Bot.sendMessage("Content: \n" + content)
+  let json = `'${content}'`
+  let data = JSON.parse(json)
+  Bot.sendMessage("Data: \n" + data + "\n\nSuccess: " + data.success)
+  
+  if(data.success === true) {
+    User.setProperty(libPrefix + "connection", {user: data.user, merchant: data.bot}, "json");
+    Bot.sendMessage("Account connected successfully!");
+  } else {
+    Bot.sendMessage("Failed to connect account.");
+  }
 }
 
 function onDepositRequest(options) {
@@ -106,7 +115,7 @@ function onDepositRequest(options) {
       amount: options.amount,
       coin: options.coin,
       network: options.network,
-      user: conn.username,
+      user: conn.user,
       app: 't.me/' + bot.name,
       success: options.success
     },
