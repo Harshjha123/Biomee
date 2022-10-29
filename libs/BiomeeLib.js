@@ -81,7 +81,7 @@ function connectUser() {
 }
 
 function onConnectBiomeeAc() {
-  let data = content
+  let data = JSON.parse(`${content}`)
   Bot.sendMessage("Data: \n" + data + "\n\nSuccess: " + data.success)
   
   if(data.success === true) {
