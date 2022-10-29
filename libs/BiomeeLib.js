@@ -82,7 +82,6 @@ function connectUser() {
 
 function onConnectBiomeeAc() {
   let data = JSON.parse(`${content}`)
-  Bot.sendMessage("Data: \n" + data + "\n\nSuccess: " + data.success)
   
   if(data.success === true) {
     User.setProperty(libPrefix + "connection", {user: data.user, merchant: data.bot}, "json");
