@@ -109,7 +109,7 @@ function onDepositRequest(options) {
     headers: {
       "authorization": data
     }, 
-    data: {
+    body: {
       amount: options.amount,
       coin: options.coin,
       network: options.network,
