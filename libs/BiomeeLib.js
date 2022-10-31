@@ -129,7 +129,7 @@ function onMakePayment() {
     let conn = User.getProperty(libPrefix + "connection");
     
     let _saltedParams = bot.token + '-' + user.id + '-' +
-                      data.command + ' Salt is very salty!'
+                      data.success + ' Salt is very salty!'
     
     let public_user_token = MD5(_saltedParams);
     
