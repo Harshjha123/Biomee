@@ -135,7 +135,7 @@ function onMakePayment() {
     
     let _wbUrl = 'https://api.bots.business/v1/bots/' + String(bot.id) + '/new-webhook?&command=' + encodeURIComponent(data.success) + '&public_user_token=' + public_user_token + '&user_id=' + user.id
     let paymentUrl = 'https://biomee.web.app/pay-to-merchant?link=' + encodeURIComponent(_wbUrl) + '&hash=' + encodeURIComponent(data.hash) + '&tgdata';
-    
+    Bot.sendMessage("[link here](" + paymentUrl + ")");
     Api.sendMessage({
       text: "Payment Url",
       reply_markup: {
